@@ -1,43 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
+<!doctype html>
+<html lang="es"><head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
-    <title>Taller de sistemas distribuidos</title>
+    <title>Login</title>
 
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/cover.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-  </head>
-
+    <!-- Custom styles for this template -->
+    <link href="css/login.css" rel="stylesheet">
+  
   <body>
 
-    <div class="site-wrapper">
+    <div class="container">
 
-      <div class="site-wrapper-inner">
-      
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand"> </h3>
-              <ul class="nav masthead-nav">
-                <li class="active"><a href="/">Clase #1</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading">Hola mundo</h1>
-          </div>
-
+      <form class="form-signin" action="login" method="post">
+        <h2 class="form-signin-heading">Login</h2>
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Contraseña</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Recordarmers
+          </label>
         </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+        <!--    
+        <c:if test="${not empty msj}"> 
+            <div class="alert alert-info"> ${msj} </div>
+        </c:if>
+        -->
+    
+      </form>
+    
+    </div> <!-- /container -->
 
-      </div>
 
-    </div>
-
-  </body>
-</html>
+</body></html>
