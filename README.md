@@ -19,4 +19,6 @@ Luego de instalar las aplicaciones requeridas:
 		puerto: 2222
 		usuario: vagrant
 		pass: vagrant
--	Finalmente, ejecutar cd /vagrant/app y nodejs server.js
+-	ejecutar cd /vagrant/app
+-	npm install 
+-	nodejs server.js
