@@ -35,25 +35,34 @@ app.get('/', function (req, res) {
 	res.sendfile(__dirname + '/view/index.html');
 });
 
+app.get('/finanzas/dashboard', function (req, res){
+	console.log("Dash finanzas");
+	res.sendFile(__dirname + '/view/finanzas/index.html');
+});
+app.get('/rrhh/dashboard', function (req, res){
+	console.log("Dash rrhh");
+	res.sendFile(__dirname + '/view/rrhh/index.html');
+});
+
 app.post('/login', function (req, res){
 	var nombreusuario = req.body.email;
 	var password = req.body.password;
 
 	db.collection('usuario').findOne({email:nombreusuario, passwd:password}, function(err, result) {
-	    //console.log('Band members of Road Crew');
 	    console.log(result);
+	    var url = "/";
 	    if(result!=null){
 	    	console.log('Usuario valido, sistema: ' + result.sistema);
 	    	if(result.sistema==='1'){
-	    		res.sendfile(__dirname + '/view/finanzas/index.html');
+	    		url="/finanzas/dashboard";
 	    	}else{
-	    		res.sendfile(__dirname + '/view/rrhh/index.html');
+	    		url="/rrhh/dashboard";
 	    	}
-	    } 
-	    res.sendfile(__dirname + '/view/index.html');
+	    }
+	    res.statusCode = 302;
+		res.setHeader("Content-Type", "text/html");
+		res.setHeader("Location", url);
+		res.end();
 	});
-
-	//console.log( db.collection('usuario').count({email:nombreusuario, passwd:password}) );
-
 
 });
