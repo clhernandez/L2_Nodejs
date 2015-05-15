@@ -6,8 +6,8 @@
 		"start": "node server.js"
 	},
 	"dependencies": {
-		"express": "*",
-		"body-parser":"*",
-		"mongoskin": "*"
+		"express": "4.12.3",
+		"body-parser":"1.12.4",
+		"mongoskin": "1.4.13"
 	}
 }
