@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var auth = require('./routes/auth');
 var finanzas = require('./routes/finanzas');
 var rrhh = require('./routes/rrhh');
@@ -43,7 +42,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/auth', auth);
 app.use('/finanzas', finanzas);
 app.use('/rrhh', rrhh);
