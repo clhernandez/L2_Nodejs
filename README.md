@@ -21,4 +21,12 @@ Luego de instalar las aplicaciones requeridas:
 		pass: vagrant
 -	ejecutar cd /vagrant/app
 -	npm install 
--	nodejs server.js
+-	npm start (Para debug ejecutar: set DEBUG=myapp & npm start)
+
+
+Realizar Importacion de bd para cada uno de los json incluidos en la carpeta app/data/finanzas_*.json
+.\mongoimport.exe /d Finanzas /c usuarios /file /ruta/al/archivo/finanzas_usuarios.json
+
+Exportar BD Mongo
+.\mongoexport.exe /d Finanzas /c usuarios /o /ruta/destino/archivo/finanzas_usuarios.json /pretty
+

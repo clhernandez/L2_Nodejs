@@ -1,0 +1,20 @@
+{
+	"_id": {
+		"$oid": "556487da0f282be006fac223"
+	},
+	"apellido": "Perez",
+	"email": "asd@asd.cl",
+	"nombre": "Juan",
+	"passwd": "asd",
+	"sistema": "1"
+}
+{
+	"_id": {
+		"$oid": "556487ef0f282be006fac224"
+	},
+	"apellido": "Perez2",
+	"email": "asd2@asd.cl",
+	"nombre": "Juan2",
+	"passwd": "asd2",
+	"sistema": "2"
+}

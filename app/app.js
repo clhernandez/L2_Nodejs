@@ -25,7 +25,7 @@ var dbF = mongoskin.db('mongodb://localhost:27017/Finanzas', serverOptions);
 app.use(function(req, res, next) {
   req.db = {};
   //req.db.tasks = db.collection('tasks');
-  req.db.usuarios = dbF.collection('usuario'); //here
+  req.db.usuarios = dbF.collection('usuarios'); //here
   next();
 })
 
