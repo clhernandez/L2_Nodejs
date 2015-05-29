@@ -6,7 +6,8 @@
 	"email": "asd@asd.cl",
 	"nombre": "Juan",
 	"passwd": "asd",
-	"sistema": "1"
+	"rut": "1-8",
+	"sistema": "2"
 }
 {
 	"_id": {
@@ -15,6 +16,7 @@
 	"apellido": "Perez2",
 	"email": "asd2@asd.cl",
 	"nombre": "Juan2",
-	"passwd": "asd2",
-	"sistema": "2"
+	"passwd": "asd",
+	"rut": "1-9",
+	"sistema": "1"
 }
