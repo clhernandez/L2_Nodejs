@@ -1,27 +1,35 @@
 var express = require('express');
+var request = require('request');
+
 var router = express.Router();
 
 router.post('/login', function (req, res){
+	var url = "/";
+
 	var nombreusuario = req.body.email;
 	var password = req.body.password;
 
-	req.db.usuarios.findOne({email:nombreusuario, passwd:password}, function(err, result) {
-	    console.log(result);
-	    var url = "/";
-	    if(result!=null){
-	    	console.log('Usuario valido, sistema: ' + result.sistema);
-	    	if(result.sistema==='1'){
-	    		url="/finanzas/dashboard";
-	    	}else{
-	    		url="/rrhh/dashboard";
-	    	}
-	    }
-	    res.statusCode = 302;
-		res.setHeader("Content-Type", "text/html");
-		res.setHeader("Location", url);
-		res.end();
-	});
+	request.post({url:'http://localhost:3001/auth/login', form: {user:nombreusuario, passwd:password}}, function(err,response,body){ 
+		if (!err && response.statusCode == 200) {
+	    	
+	    	body = JSON.parse(body);
 
+	    	console.log(body);
+	    	console.log(body.sistema);
+
+		    if(body.sistema!=null){
+		    	
+		    	console.log('Usuario valido, sistema: ' + body.sistema);
+		    	if(body.sistema==='1'){
+		    		url = "/finanzas/dashboard";
+		    	}else{
+		    		url = "/rrhh/dashboard";
+		    	}
+
+		    }
+	  	}
+	  	res.redirect(url);
+	});
 });
 
 
@@ -31,7 +39,7 @@ router.get('/logout', function(req, res, next) {
 	    console.log(result);
 	});
 
-	res.send('respond with a resource');
+	res.redirect("/");
 });
 
 
