@@ -16,18 +16,18 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 //DBCONF
-var mongoskin = require('mongoskin');
-var serverOptions = {
-  'auto_reconnect': true,
-  'poolSize': 2
-};
-var dbF = mongoskin.db('mongodb://localhost:27017/Finanzas', serverOptions); 
-app.use(function(req, res, next) {
-  req.db = {};
-  //req.db.tasks = db.collection('tasks');
-  req.db.usuarios = dbF.collection('usuarios'); //here
-  next();
-})
+// var mongoskin = require('mongoskin');
+// var serverOptions = {
+//   'auto_reconnect': true,
+//   'poolSize': 2
+// };
+// var dbF = mongoskin.db('mongodb://localhost:27017/Finanzas', serverOptions); 
+// app.use(function(req, res, next) {
+//   req.db = {};
+//   //req.db.tasks = db.collection('tasks');
+//   req.db.usuarios = dbF.collection('usuarios'); //here
+//   next();
+// })
 
 
 // uncomment after placing your favicon in /public

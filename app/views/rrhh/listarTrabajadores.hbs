@@ -1,41 +1,41 @@
 
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">Listado Trabajadores</h1>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>RUT</th>
-								<th>Nombre</th>
-								<th>Apellido</th>
-								<th>Departamento</th>
-								<th>Email</th>
-								<th>Modificar</th>
-								<th>Eliminar</th>
-							</tr>
-						</thead>
-						<tbody>
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h1 class="page-header">Listado Trabajadores</h1>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>RUT</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Departamento</th>
+						<th>Email</th>
+						<th>Modificar</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+					{{#each data}}
+						<tr>
+							<td>{{rut}}</td>
+							<td>{{nombre}}</td>
+							<td>{{apellido}}</td>
+							<td>{{sistema}}</td>
+							<td>{{email}}</td>
+							<td>
+								<a href="#" class="modificar_trabajador text-center" attr-id="{{rut}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+							</td>
+							<td>
+								<a href="#" class="eliminar_trabajador text-center" attr-id="{{rut}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+							</td>
 							
-							{{#each data}}
-								<tr>
-									<td>{{rut}}</td>
-									<td>{{nombre}}</td>
-									<td>{{apellido}}</td>
-									<td>{{sistema}}</td>
-									<td>{{email}}</td>
-									<td>
-										<a href="#" class="modificar_trabajador text-center" attr-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-									</td>
-									<td>
-										<a href="#" class="eliminar_trabajador text-center" attr-id="{{_id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-									</td>
-									
-								</tr>
-							{{/each}}
-						</tbody>
-					</table>
-				</div>
-			</div>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 	<div class="modal fade" id="myModal">
 	  <div class="modal-dialog">
