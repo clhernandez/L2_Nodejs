@@ -1,22 +1,32 @@
 {
 	"_id": {
-		"$oid": "556487da0f282be006fac223"
+		"$oid": "556a15eb778e10bf02b21d78"
 	},
-	"apellido": "Perez",
-	"email": "asd@asd.cl",
-	"nombre": "Juan",
-	"passwd": "asd",
+	"apellido": "Gomez",
+	"cargo": "Contador",
+	"departamento": "Finanzas",
+	"email": "asd2@asd.cl",
+	"fecha_contratacion": "10/0/010",
+	"nombre": "Juan2",
+	"password": "asd2",
 	"rut": "1-8",
-	"sistema": "2"
+	"sistema": "1",
+	"sueldo": "100000",
+	"telefono": "5674875"
 }
 {
 	"_id": {
-		"$oid": "556487ef0f282be006fac224"
+		"$oid": "556a1614778e10bf02b21d79"
 	},
-	"apellido": "Perez2",
-	"email": "asd2@asd.cl",
-	"nombre": "Juan2",
-	"passwd": "asd",
+	"apellido": "Gomez",
+	"cargo": "Ing. RRhh",
+	"departamento": "Rrhh",
+	"email": "asd@asd.cl",
+	"fecha_contratacion": "10/0/010",
+	"nombre": "Juan",
+	"password": "asd",
 	"rut": "1-9",
-	"sistema": "1"
+	"sistema": "2",
+	"sueldo": "100000",
+	"telefono": "5674875"
 }

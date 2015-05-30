@@ -16,12 +16,12 @@
 				</thead>
 				<tbody>
 					
-					{{#each data}}
+					{{#each trabajadores}}
 						<tr>
 							<td>{{rut}}</td>
 							<td>{{nombre}}</td>
 							<td>{{apellido}}</td>
-							<td>{{sistema}}</td>
+							<td>{{departamento}}</td>
 							<td>{{email}}</td>
 							<td>
 								<a href="#" class="modificar_trabajador text-center" attr-id="{{rut}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
@@ -64,14 +64,14 @@
 				<label for="input_sueldo" class="sr-only">sueldo</label>
 				<input name="sueldo" type="number" id="input_sueldo" class="form-control" placeholder="sueldo"  autofocus="">
 				<select name="id_departamento_fk" class="form-control" id="input_id_departamento_fk" required>
-					<c:forEach items="${departamentos}" var="dep" varStatus="loop">
-						<option value="${dep.id_departamento}">${dep.nombre_departamento}</option>
-					</c:forEach>
+					{{#each departamentos}}
+						<option value="{{nombre_departamento}}">{{nombre_departamento}}</option>
+					{{/each}}
 				</select>
 				<select name="id_cargo_fk" class="form-control" id="input_id_cargo_fk" required>
-					<c:forEach items="${cargos}" var="crg" varStatus="loop">
-						<option value="${crg.id_cargo}">${crg.nombre_cargo}</option>
-					</c:forEach>
+					{{#each cargos}}
+						<option value="{{nombre_cargo}}">{{nombre_cargo}}</option>
+					{{/each}}
 				</select>
 		      </form>
 		      <span id='msjws' class='alert alert-info hide' ></span>
@@ -91,10 +91,11 @@
 			$(".modificar_trabajador").click(function(){
 				var entrada = $(this).attr("attr-id");
 				console.log(entrada);
-				$.post("getTrabajadorByRut", {rut: entrada}, function(json){
+				$.get("getTrabajadorByRut", {rut: entrada}, function(json){
+					console.log(json);
 					if(json!=null){
 						
-						$("#input_id_trabajador").val(json.id_trabajador);
+						$("#input_id_trabajador").val(json._id);
 						$("#input_rut").val(json.rut);
 						$("#input_nombre").val(json.nombre);
 						$("#input_apellido").val(json.apellido);
@@ -112,6 +113,7 @@
 				});
 				
 			});
+			
 			$("#guardar_trabajador").click(function(){
 				if($('#form_mod_trabajador')[0].checkValidity()){
 					$.post("modificar_trabajador", $("#form_mod_trabajador").serialize(), function(json){

@@ -1,0 +1,11 @@
+
+
+db.usuarios.insert({rut : "1-8",nombre : "Juan2",apellido : "Gomez",email : "asd2@asd.cl",password : "asd2",telefono : "5674875",fecha_contratacion : "10/0/010", cargo : "Contador", departamento : "Finanzas", sueldo : "100000",sistema:"1"})
+db.usuarios.insert({rut : "1-9",nombre : "Juan",apellido : "Gomez",email : "asd@asd.cl",password : "asd",telefono : "5674875",fecha_contratacion : "10/0/010", cargo : "Ing. RRhh", departamento : "Rrhh", sueldo : "100000",sistema:"2"})
+db.usuarios.update({sistema:"1"},{rut : "1-8",nombre : "Juan2",apellido : "Gomez",email : "asd2@asd.cl",password : "asd2",telefono : "5674875",fecha_contratacion : "10/0/010", cargo : "Contador", departamento : "Finanzas", sueldo : "100000",sistema:"1"});
+
+db.cargos.insert({nombre_cargo : "Ing. RRHH",sueldo_min : "1000000",sueldo_max : "1200000"});
+db.cargos.insert({nombre_cargo : "Contador",sueldo_min : "1000000",sueldo_max : "1200000"});
+
+db.departamentos.insert({nombre_departamento : "Finanzas", administrador : "1-8", ubicacion : "Santiago", sistema:"1"})
+db.departamentos.insert({nombre_departamento : "Rrhh", administrador : "1-9", ubicacion : "Santiago", sistema:"2"})

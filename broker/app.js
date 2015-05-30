@@ -22,11 +22,13 @@ var serverOptions = {
   'auto_reconnect': true,
   'poolSize': 2
 };
-var dbR = mongoskin.db('mongodb://localhost:27017/Rrhh', serverOptions); 
+var dbR = mongoskin.db('mongodb://localhost:27017/rrhh', serverOptions); 
 app.use(function(req, res, next) {
   req.db = {};
   //req.db.tasks = db.collection('tasks');
   req.db.usuarios = dbR.collection('usuarios'); //here
+  req.db.departamentos = dbR.collection('departamentos'); //here
+  req.db.cargos = dbR.collection('cargos'); //here
   next();
 })
 

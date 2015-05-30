@@ -34,10 +34,10 @@ router.post('/login', function (req, res){
 
 
 router.get('/logout', function(req, res, next) {
-	req.db.usuarios.find().toArray(function(err, result) {
+	/*req.db.usuarios.find().toArray(function(err, result) {
 	    if (err) throw err;
 	    console.log(result);
-	});
+	});*/
 
 	res.redirect("/");
 });

@@ -1,0 +1,16 @@
+{
+	"_id": {
+		"$oid": "556a166e778e10bf02b21d7a"
+	},
+	"nombre_cargo": "Ing. RRHH",
+	"sueldo_max": "1200000",
+	"sueldo_min": "1000000"
+}
+{
+	"_id": {
+		"$oid": "556a167e778e10bf02b21d7b"
+	},
+	"nombre_cargo": "Contador",
+	"sueldo_max": "1200000",
+	"sueldo_min": "1000000"
+}
