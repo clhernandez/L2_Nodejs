@@ -100,5 +100,26 @@ router.post('/modificar_trabajador', function(req, res, next) {
 	});
 });
 
+router.post('/eliminarTrabajadorById', function(req, res, next) {
+	var rut = req.body.rut;
+	console.log(rut);
+	
+	var data = {};
+
+	request.del({url:'http://localhost:3001/rrhh/trabajadores/delete_by_rut', form: {rut : rut}, qs:{rut : rut}}, function(err,response,body){
+
+		console.log("Eliminar trabajador")
+		if (!err && response.statusCode == 200) {
+	    	data.codigo = JSON.parse(body);
+	  	}else{
+	  		data.codigo = response.statusCode;
+	  		data.mensaje = 'Ocurrio un error el eliminar al trabajador.';
+	  	}
+
+	  	console.log(data);
+  
+		res.json(data);
+	});
+});
 
 module.exports = router;

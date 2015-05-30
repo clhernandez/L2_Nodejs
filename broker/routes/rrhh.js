@@ -73,10 +73,21 @@ router.put('/trabajadores/modify_by_rut', function (req, res){
 	  		res.json(data);
 	  	}
 	});
-
-	
 });
 
+router.delete('/trabajadores/delete_by_rut', function (req, res){
+	console.log("Eliminar Trabajador by Rut");
+	console.log(req.query.rut);
+	console.log(req.body.rut);
+	var rut = req.query.rut;
+	console.log(rut);
+
+	req.db.usuarios.remove({rut:rut},function(err, result) {
+	    if (err) throw err;
+	    console.log("Resultado: "+result);
+	    res.json(result);
+	});
+});
 
 router.get('/cargos/get_all', function (req, res){
 	console.log("Listar Cargos");

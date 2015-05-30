@@ -105,8 +105,8 @@
 						$("#input_fecha_contratacion").val(json.fecha_contratacion);
 						$("#input_sueldo").val(json.sueldo);
 						
-						$("#input_id_cargo_fk option[value="+ json.id_cargo_fk +"]").attr("selected",true);
-						$("#input_id_departamento_fk option[value="+ json.id_departamento_fk +"]").attr("selected",true);
+						$("#input_id_cargo_fk option[value='"+ json.cargo +"']").attr("selected",true);
+						$("#input_id_departamento_fk option[value='"+ json.departamento +"']").attr("selected",true);
 						
 						$('#myModal').modal();
 					}
@@ -133,10 +133,9 @@
 				var entrada = $(this).attr("attr-id");
 				console.log(entrada);
 				if(confirm("¿Esta seguro que desea eliminar a este trabajador?")){
-					$.post("eliminarTrabajadorById", {id_trabajador: entrada}, function(json){
+					$.post("eliminarTrabajadorById", {rut: entrada}, function(json){
 						location.reload();
 					});
-					
 				}
 				
 			});
