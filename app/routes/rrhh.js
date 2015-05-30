@@ -87,10 +87,11 @@ router.post('/modificar_trabajador', function(req, res, next) {
 
 		console.log("modificar trabajador")
 		if (!err && response.statusCode == 200) {
-	    	data.respuesta = JSON.parse(body);
+	    	data.codigo = JSON.parse(body);
+	    	data.mensaje = "Modificacion Exitosa."
 	  	}else{
 	  		data.codigo = response.statusCode;
-	  		data.mensaje = 'Error al obtener el trabajador';
+	  		data.mensaje = 'Ocurrio un error en la modificacion al trabajador.';
 	  	}
 
 	  	console.log(data);

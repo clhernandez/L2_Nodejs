@@ -113,12 +113,12 @@
 				});
 				
 			});
-			
+
 			$("#guardar_trabajador").click(function(){
 				if($('#form_mod_trabajador')[0].checkValidity()){
 					$.post("modificar_trabajador", $("#form_mod_trabajador").serialize(), function(json){
 						$("#msjws").empty();
-						$("#msjws").text(json.msj);
+						$("#msjws").text(json.mensaje);
 						$("#msjws").removeClass("hide");
 						reload=true;
 					});
