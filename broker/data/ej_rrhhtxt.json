@@ -8,4 +8,8 @@ db.cargos.insert({nombre_cargo : "Ing. RRHH",sueldo_min : "1000000",sueldo_max :
 db.cargos.insert({nombre_cargo : "Contador",sueldo_min : "1000000",sueldo_max : "1200000"});
 
 db.departamentos.insert({nombre_departamento : "Finanzas", administrador : "1-8", ubicacion : "Santiago", sistema:"1"})
+
 db.departamentos.insert({nombre_departamento : "Rrhh", administrador : "1-9", ubicacion : "Santiago", sistema:"2"})
+
+db.departamentos.update({nombre_departamento : "Finanzas"},{nombre_departamento : "Finanzas", administrador : "1-8", ubicacion : "Santiago", sistema:"1"})
+db.departamentos.update({nombre_departamento : "Rrhh"},{nombre_departamento : "Rrhh", administrador : "1-9", ubicacion : "Santiago", sistema:"2"})

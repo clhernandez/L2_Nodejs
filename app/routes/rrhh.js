@@ -103,7 +103,7 @@ router.post('/modificar_trabajador', function(req, res, next) {
 router.post('/eliminarTrabajadorById', function(req, res, next) {
 	var rut = req.body.rut;
 	console.log(rut);
-	
+
 	var data = {};
 
 	request.del({url:'http://localhost:3001/rrhh/trabajadores/delete_by_rut', form: {rut : rut}, qs:{rut : rut}}, function(err,response,body){
@@ -121,5 +121,78 @@ router.post('/eliminarTrabajadorById', function(req, res, next) {
 		res.json(data);
 	});
 });
+
+router.get('/ingresarTrabajador', function(req, res, next) {
+	console.log("Ingresar trabajador");
+	var data = {};
+	data.layout = 'rrhh/base/layout';
+
+	//cargar 
+	request.get({url:'http://localhost:3001/rrhh/departamentos/get_all'}, function(err,response,body){ 
+		console.log("obtener listado de departamentos...");
+		if (!err && response.statusCode == 200) {
+			data.departamentos = JSON.parse(body);
+
+	    	request.get({url:'http://localhost:3001/rrhh/cargos/get_all'}, function(err,response,body){ 
+				console.log("obtener listado de cargos...");
+				if (!err && response.statusCode == 200) {
+					data.cargos = JSON.parse(body);
+
+					// console.log(data);
+			    	res.render('rrhh/ingresarTrabajador', data);
+			  	}else{
+			  		data.codigo = response.statusCode;
+			  		data.mensaje = 'Error al obtener los cargos';
+			  		res.render('rrhh/ingresarTrabajador', data);
+			  	}
+			});
+	  	}else{
+	  		data.codigo = response.statusCode;
+			data.mensaje = 'Error al obtener los departamentos';
+	  		res.render('rrhh/ingresarTrabajador', data);
+	  	}
+	});
+});
+
+router.post('/add_trabajador', function(req, res, next) {
+	var data = {};
+	var rut = req.body.rut;
+	var nombre = req.body.nombre;
+	var apellido = req.body.apellido;
+	var email = req.body.email;
+	var password = req.body.password;
+	var telefono = req.body.telefono;
+	var fecha_contratacion = req.body.fecha_contratacion;
+	var sueldo = req.body.sueldo;
+	var nombreDepartamento = req.body.id_departamento_fk;
+	var nombreCargo = req.body.id_cargo_fk;
+
+	//ingresar el trabajador 
+	request.post({url:'http://localhost:3001/rrhh/trabajadores/add', form: {rut : rut, nombre : nombre, apellido : apellido, 
+			email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
+			sueldo : sueldo, id_departamento_fk : nombreDepartamento, id_cargo_fk : nombreCargo} }, function(err,response,body){ 
+			console.log(response.statusCode);
+			if (!err && response.statusCode == 200) {
+				//console.log(JSON.parse(body)); //body trae los datos del trabajador
+				data.mensaje = "Trabajador ingresado correctamente";
+				data.codigo = response.statusCode;
+		  	}else{
+		  		//Manejdo de errores del servicio
+		  		if(response.statusCode==500){
+		  			var parse = JSON.parse(body);
+		  			console.log(parse);
+		  			if(parse.code==11000){
+		  				data.codigo=11000; 
+		  				data.mensaje="Error, email ya existe.";
+		  			}
+		  		}else{
+					data.codigo = response.statusCode;
+		  			data.mensaje = 'Error al ingresar trabajador';
+		  		}
+		  	}
+		  	res.json(data);
+	});
+});
+
 
 module.exports = router;

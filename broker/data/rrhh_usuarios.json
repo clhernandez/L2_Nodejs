@@ -1,21 +1,5 @@
 {
 	"_id": {
-		"$oid": "556a15eb778e10bf02b21d78"
-	},
-	"apellido": "Gomez",
-	"cargo": "Contador",
-	"departamento": "Finanzas",
-	"email": "asd2@asd.cl",
-	"fecha_contratacion": "10/0/010",
-	"nombre": "Juan2",
-	"password": "asd2",
-	"rut": "1-8",
-	"sistema": "1",
-	"sueldo": "100000",
-	"telefono": "5674875"
-}
-{
-	"_id": {
 		"$oid": "556a1614778e10bf02b21d79"
 	},
 	"apellido": "Gomez",
@@ -29,4 +13,20 @@
 	"sistema": "2",
 	"sueldo": "100000",
 	"telefono": "5674875"
+}
+{
+	"_id": {
+		"$oid": "556a4e58d0190ac00dc4da2d"
+	},
+	"apellido": "123",
+	"cargo": "Ing. RRHH",
+	"departamento": "Rrhh",
+	"email": "awdawd@asd.com",
+	"fecha_contratacion": "2015-05-14",
+	"nombre": "awdad",
+	"password": "asd",
+	"rut": "123",
+	"sistema": "2",
+	"sueldo": "123123",
+	"telefono": "123"
 }

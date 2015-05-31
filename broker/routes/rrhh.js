@@ -37,6 +37,45 @@ router.get('/trabajadores/get_by_rut', function (req, res){
 	});
 });
 
+router.post('/trabajadores/add', function (req, res){
+	console.log("Ingresar Trabajador");
+	var rut = req.body.rut;
+	var nombre = req.body.nombre;
+	var apellido = req.body.apellido;
+	var email = req.body.email;
+	var password = req.body.password;
+	var telefono = req.body.telefono;
+	var fecha_contratacion = req.body.fecha_contratacion;
+	var sueldo = req.body.sueldo;
+	var nombreDepartamento = req.body.id_departamento_fk;
+	var nombreCargo = req.body.id_cargo_fk;
+
+	request.get({url:'http://localhost:3001/rrhh/departamentos/get_by_name', qs:{nombre:nombreDepartamento}}, function(err,response,body){ 
+		
+		if (!err && response.statusCode == 200) {
+	    	data = JSON.parse(body);
+			req.db.usuarios.insert({rut : rut ,nombre : nombre, apellido : apellido,
+					email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
+					cargo : nombreCargo, departamento : nombreDepartamento, sueldo : sueldo ,sistema:data.sistema}, function(err, result) {
+				    if (err){
+				    	result = err;
+				    	res.json(500, result);
+				    }else{
+				    	console.log("add Trabajador: "+result);
+				   		res.json(result);
+				    }
+			});
+	  	}else{
+	  		data = {codigo: response.statusCode, mensaje:'Error al obtener codigo del sistema...'};
+	  		res.json(data);
+	  	}
+	});
+
+
+
+});
+
+
 router.put('/trabajadores/modify_by_rut', function (req, res){
 	console.log("Modificar Trabajador by Rut");
 	var data = {};
