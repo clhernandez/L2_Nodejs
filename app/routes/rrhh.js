@@ -2,6 +2,7 @@ var express = require('express');
 var request = require('request');
 var router = express.Router();
 
+var timeoutGlobal = 2000;
 /* GET home page. */
 router.get('/dashboard', function(req, res, next) {
 	var data = {cantidadCargos:2, cantidadDepartamentos:3, cantidadTrabajadores:4};
@@ -17,36 +18,16 @@ router.get('/listarTrabajadores', function(req, res, next) {
 	var data = {};
 	data.layout ='rrhh/base/layout';
 
-	request.get({url:'http://localhost:3001/rrhh/trabajadores/get_all'}, function(err,response,body){
+	request.get({url:'http://localhost:3001/rrhh/trabajadores/get_all', timeout:timeoutGlobal}, function(err,response,body){
 		console.log("obtener listado de trabajadores...")
 		if (!err && response.statusCode == 200) {
 			data.trabajadores = JSON.parse(body);
-
-	    	request.get({url:'http://localhost:3001/rrhh/departamentos/get_all'}, function(err,response,body){ 
-				console.log("obtener listado de departamentos...")
-				if (!err && response.statusCode == 200) {
-					data.departamentos = JSON.parse(body);
-
-			    	request.get({url:'http://localhost:3001/rrhh/cargos/get_all'}, function(err,response,body){ 
-						console.log("obtener listado de cargos...")
-						if (!err && response.statusCode == 200) {
-							data.cargos = JSON.parse(body);
-
-							// console.log(data);
-					    	res.render('rrhh/listarTrabajadores', data);
-					  	}else{
-					  		data.codigo = response.statusCode;
-					  		data.mensaje = 'Error al obtener los cargos';
-					  		res.render('rrhh/listarTrabajadores', data);
-					  	}
-					});
-			  	}else{
-  			  		data.codigo = response.statusCode;
-	  				data.mensaje = 'Error al obtener los departamentos';
-			  		res.render('rrhh/listarTrabajadores', data);
-			  	}
-			});
+			res.render('rrhh/listarTrabajadores', data);
 	  	}
+	}).on('error', function(){
+		data.codigo = -1;
+		data.mensaje = "Servicios no responden, vuelva a intentarlo dentro de unos momentos";
+		res.render('rrhh/listarTrabajadores', data);
 	});
 });
 
@@ -132,32 +113,7 @@ router.get('/ingresarTrabajador', function(req, res, next) {
 	console.log("Ingresar trabajador");
 	var data = {};
 	data.layout = 'rrhh/base/layout';
-
-	//cargar 
-	request.get({url:'http://localhost:3001/rrhh/departamentos/get_all'}, function(err,response,body){ 
-		console.log("obtener listado de departamentos...");
-		if (!err && response.statusCode == 200) {
-			data.departamentos = JSON.parse(body);
-
-	    	request.get({url:'http://localhost:3001/rrhh/cargos/get_all'}, function(err,response,body){ 
-				console.log("obtener listado de cargos...");
-				if (!err && response.statusCode == 200) {
-					data.cargos = JSON.parse(body);
-
-					// console.log(data);
-			    	res.render('rrhh/ingresarTrabajador', data);
-			  	}else{
-			  		data.codigo = response.statusCode;
-			  		data.mensaje = 'Error al obtener los cargos';
-			  		res.render('rrhh/ingresarTrabajador', data);
-			  	}
-			});
-	  	}else{
-	  		data.codigo = response.statusCode;
-			data.mensaje = 'Error al obtener los departamentos';
-	  		res.render('rrhh/ingresarTrabajador', data);
-	  	}
-	});
+	res.render('rrhh/ingresarTrabajador', data);
 });
 
 /*POST metodo que mediante peticion AJAX ingresa un trabajador*/
@@ -175,7 +131,7 @@ router.post('/add_trabajador', function(req, res, next) {
 	var nombreCargo = req.body.id_cargo_fk;
 
 	//ingresar el trabajador 
-	request.post({url:'http://localhost:3001/rrhh/trabajadores/add', form: {rut : rut, nombre : nombre, apellido : apellido, 
+	request.post({url:'http://localhost:3001/rrhh/trabajadores/add', timeout:2000, form: {rut : rut, nombre : nombre, apellido : apellido, 
 			email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
 			sueldo : sueldo, id_departamento_fk : nombreDepartamento, id_cargo_fk : nombreCargo} }, function(err,response,body){ 
 			console.log(response.statusCode);
@@ -200,77 +156,5 @@ router.post('/add_trabajador', function(req, res, next) {
 		  	res.json(data);
 	});
 });
-
-/*.................................CARGOS.................................................*/
-
-/*GET pagina listado de trabajadores*/
-router.get('/listarCargos', function(req, res, next) {
-	var data = {};
-	data.layout ='rrhh/base/layout';
-
-	request.get({url:'http://localhost:3001/rrhh/cargos/get_all'}, function(err,response,body){ 
-		console.log("obtener listado de cargos...")
-		if (!err && response.statusCode == 200) {
-			data.cargos = JSON.parse(body);
-
-			// console.log(data);
-	    	res.render('rrhh/listarCargos', data);
-	  	}else{
-	  		data.codigo = response.statusCode;
-	  		data.mensaje = 'Error al obtener los cargos';
-	  		res.render('rrhh/listarCargos', data);
-	  	}
-	});
-});
-
-/*GET cargo por id*/
-router.post('/getCargoByName', function(req, res, next){
-	var data = {};
-	var entrada = req.body.nombre;
-	console.log("obtener cargo: "+entrada );
-
-	request.get({url:'http://localhost:3001/rrhh/cargos/get_by_name', qs:{nombre:entrada}}, function(err,response,body){ 
-		
-		if (!err && response.statusCode == 200) {
-	    	data = JSON.parse(body);
-	  	}else{
-	  		data.codigo = response.statusCode;
-	  		data.mensaje = 'Error al obtener el cargo';
-	  	}
-	  	console.log(data);
-  
-		res.json(data);
-	});
-});
-
-/*POST modifica los datos de un trabajador mediante AJAX*/
-router.post('/modificar_cargo', function(req, res, next) {
-	var id_cargo = req.body.id_cargo;
-	var nombre_cargo = req.body.nombre_cargo;
-	var sueldo_min = req.body.sueldo_min;
-	var sueldo_max = req.body.sueldo_max;
-
-	var data = {};
-
-	request.put({url:'http://localhost:3001/rrhh/cargos/modify_by_name', 
-		form: {id_cargo: id_cargo, nombre_cargo:nombre_cargo, 
-			sueldo_min:sueldo_min, sueldo_max:sueldo_max}}, function(err,response,body){
-
-		console.log("modificar trabajador")
-		if (!err && response.statusCode == 200) {
-	    	data.codigo = JSON.parse(body);
-	    	data.mensaje = "Modificacion Exitosa."
-	  	}else{
-	  		data.codigo = response.statusCode;
-	  		data.mensaje = 'Ocurrio un error en la modificacion al trabajador.';
-	  	}
-
-	  	console.log(data);
-  
-		res.json(data);
-	});
-});
-
-
 
 module.exports = router;
