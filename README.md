@@ -25,11 +25,8 @@ Luego de instalar las aplicaciones requeridas:
 
 
 Realizar Importacion de bd para cada uno de los json incluidos en la carpeta app/data/finanzas_*.json
-.\mongoimport.exe /d Rrhh /c usuarios /file /ruta/al/archivo/rrhh_usuarios.json
+.\mongoimport.exe /d rrhh /c usuarios /file rrhh_usuarios.json
 
 Exportar BD Mongo
-.\mongoexport.exe /d Rrhh /c usuarios /o /ruta/destino/archivo/rrhh_usuarios.json /pretty
-
-EMAIL UNICO
-db.usuarios.ensureIndex({email:1},{unique:true, sparse:true});
+.\mongoexport.exe /d rrhh /c usuarios /o rrhh_usuarios.json /pretty
 
