@@ -64,14 +64,12 @@
 				<label for="input_sueldo" class="sr-only">sueldo</label>
 				<input name="sueldo" type="number" id="input_sueldo" class="form-control" placeholder="sueldo"  autofocus="">
 				<select name="id_departamento_fk" class="form-control" id="input_id_departamento_fk" required>
-					{{#each departamentos}}
-						<option value="{{nombre_departamento}}">{{nombre_departamento}}</option>
-					{{/each}}
+					<option value="Rrhh">Rrhh</option>
+					<option value="Finanzas">Finanzas</option>
 				</select>
 				<select name="id_cargo_fk" class="form-control" id="input_id_cargo_fk" required>
-					{{#each cargos}}
-						<option value="{{nombre_cargo}}">{{nombre_cargo}}</option>
-					{{/each}}
+					<option value="Contador">Contador</option>
+					<option value="Adm. Recursos Humanos">Adm. Recursos Humanos</option>
 				</select>
 		      </form>
 		      <span id='msjws' class='alert alert-info hide' ></span>

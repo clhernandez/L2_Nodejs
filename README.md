@@ -30,3 +30,6 @@ Realizar Importacion de bd para cada uno de los json incluidos en la carpeta app
 Exportar BD Mongo
 .\mongoexport.exe /d Rrhh /c usuarios /o /ruta/destino/archivo/rrhh_usuarios.json /pretty
 
+EMAIL UNICO
+db.usuarios.ensureIndex({email:1},{unique:true, sparse:true});
+

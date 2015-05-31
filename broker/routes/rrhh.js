@@ -128,39 +128,6 @@ router.delete('/trabajadores/delete_by_rut', function (req, res){
 	});
 });
 
-router.get('/cargos/get_all', function (req, res){
-	console.log("Listar Cargos");
-	var cargos = [];
-	var flagfind=false; //bloquear peticion asincrona.
-
-	var result = req.db.cargos.find({});//buscar todos los trabajadores
-	result.each(function(err, cargo) {
-		if(cargo!=null){
-			//Agregar los trabajadores obtenidos a un array
-			cargos.push(cargo);
-		}else{
-			//al no encontrar mas trabajadores retorna la respuesta.
-			console.log(cargos.length);
-			if(cargos.length==0){
-				cargos.push({error:1, mensaje:'No exiten cargos'});
-			}
-			res.json(cargos);
-		}
-	});
-});
-
-router.get('/cargos/get_by_name', function (req, res){
-	console.log("Get cargo by _name");
-	var nombre = req.query.nombre;
-	console.log(id);
-
-	req.db.cargos.findOne({nombreCargo:nombre},function(err, result) {
-	    if (err) throw err;
-	    console.log("cargo: "+result);
-	    res.json(result);
-	});
-});
-
 router.get('/departamentos/get_all', function (req, res){
 	console.log("Listar Departamentos");
 	var departamentos = [];
@@ -193,5 +160,41 @@ router.get('/departamentos/get_by_name', function (req, res){
 	    res.json(result);
 	});
 });
+
+/*.................................CARGOS.................................................*/
+
+router.get('/cargos/get_all', function (req, res){
+	console.log("Listar Cargos");
+	var cargos = [];
+	var flagfind=false; //bloquear peticion asincrona.
+
+	var result = req.db.cargos.find({});//buscar todos los trabajadores
+	result.each(function(err, cargo) {
+		if(cargo!=null){
+			//Agregar los trabajadores obtenidos a un array
+			cargos.push(cargo);
+		}else{
+			//al no encontrar mas trabajadores retorna la respuesta.
+			console.log(cargos.length);
+			if(cargos.length==0){
+				cargos.push({error:1, mensaje:'No exiten cargos'});
+			}
+			res.json(cargos);
+		}
+	});
+});
+
+router.get('/cargos/get_by_name', function (req, res){
+	console.log("Get cargo by _name");
+	var nombre = req.query.nombre;
+	console.log(nombre);
+
+	req.db.cargos.findOne({nombre_cargo:nombre},function(err, result) {
+	    if (err) throw err;
+	    console.log("cargo: "+result);
+	    res.json(result);
+	});
+});
+
 
 module.exports = router;
