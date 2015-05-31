@@ -21,14 +21,12 @@
 			<label for="input_sueldo" class="sr-only">sueldo</label>
 			<input name="sueldo" type="number" id="input_sueldo" class="form-control" placeholder="sueldo"  required autofocus="">
 			<select name="id_departamento_fk" class="form-control" id="input_id_departamento_fk" required>
-				{{#each departamentos}}
-					<option value="{{nombre_departamento}}">{{nombre_departamento}}</option>
-				{{/each}}
+				<option value="Rrhh">Rrhh</option>
+				<option value="Finanzas">Finanzas</option>
 			</select>
 			<select name="id_cargo_fk" class="form-control" id="input_id_cargo_fk" required>
-				{{#each cargos}}
-					<option value="{{nombre_cargo}}">{{nombre_cargo}}</option>
-				{{/each}}
+				<option value="Contador">Contador</option>
+				<option value="Adm.Recursos Humanos">Adm. Recursos Humanos</option>
 			</select>
 			<button class="btn btn-lg btn-primary btn-block" type="button" id="btn_add_trabajador">Ingresar</button>
 	      </form>
@@ -38,10 +36,16 @@
 <script>
 	$(document).ready(function(){
 		$("#btn_add_trabajador").click(function(){
-			$.post("add_trabajador", $("#form_add_trabajador").serialize(), function(json){
-				$("#mensaje").removeClass('hide');
-				$("#mensaje").empty().append(json.mensaje);
-			});
+			if($('#form_add_trabajador')[0].checkValidity()){
+				$.post("add_trabajador", $("#form_add_trabajador").serialize(), function(json){
+					$("#form_add_trabajador")[0].reset();
+					$("#mensaje").removeClass('hide');
+					$("#mensaje").empty().append(json.mensaje);
+				});
+			}else{
+				var $myForm = $("#form_add_trabajador");
+				$('<input type="submit">').hide().appendTo($myForm).click().remove();
+			}
 		});
 	});
 </script>

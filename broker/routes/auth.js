@@ -5,13 +5,13 @@ router.post('/login', function (req, res){
 	var nombreusuario = req.body.user;
 	var password = req.body.passwd;
 
-	req.db.usuarios.findOne({email:nombreusuario, passwd:password}, function(err, result) {
+	req.db.usuarios.findOne({email:nombreusuario, password:password}, function(err, result) {
 	    console.log("result: " + result);
 	    
 	    if(result==null){
 	    	result = {error: 1};
 	    }else{
-	    	console.log('Usuario valido, sistema: ' + result.sistema);
+	    	console.log('Usuario valido, sistema: ' + result.departamento);
 	    }
 	    res.json(result);
 	});

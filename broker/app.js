@@ -23,12 +23,12 @@ var serverOptions = {
   'poolSize': 2
 };
 var dbR = mongoskin.db('mongodb://localhost:27017/rrhh', serverOptions); 
+var dbF = mongoskin.db('mongodb://localhost:27017/finanzas', serverOptions); 
 app.use(function(req, res, next) {
   req.db = {};
   //req.db.tasks = db.collection('tasks');
-  req.db.usuarios = dbR.collection('usuarios'); //here
-  req.db.departamentos = dbR.collection('departamentos'); //here
-  req.db.cargos = dbR.collection('cargos'); //here
+  req.db.usuarios = dbR.collection('usuarios'); //coleccion que contiene los trabajdores - RRHH
+  req.db.ordenes = dbF.collection('ordenes'); //coleccion que contiene las ordenes de compra - Finanzas
   next();
 })
 

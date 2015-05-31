@@ -15,12 +15,12 @@ router.post('/login', function (req, res){
 	    	body = JSON.parse(body);
 
 	    	console.log(body);
-	    	console.log(body.sistema);
+	    	console.log(body.departamento);
 
-		    if(body.sistema!=null){
+		    if(body.departamento!=null){
 		    	
-		    	console.log('Usuario valido, sistema: ' + body.sistema);
-		    	if(body.sistema==='1'){
+		    	console.log('Usuario valido, sistema: ' + body.departamento);
+		    	if(body.departamento==='Finanzas'){
 		    		url = "/finanzas/dashboard";
 		    	}else{
 		    		url = "/rrhh/dashboard";
