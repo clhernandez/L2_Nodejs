@@ -1,0 +1,28 @@
+{
+    "cliente":{
+        "nombre":"Jose",
+        "apellido":"Ramirez",
+        "direccion":"Av. Las sophoras #6478",
+        "telefono":"+56 9 74679873",
+        "ciudad":"Arica",
+        "region":"Arica y Parinacota"
+    },
+    "productos":[
+        {
+            "nombre":"Clavo4'",
+            "precio":25,
+            "descripcion":"Un clásico de los clavos.",
+            "cantidad":500
+        },
+        {
+            "nombre":"Placa Cholguan 4mtx2mt",
+            "precio":5300,
+            "descripcion":"La mejor calidad.",
+            "cantidad":5
+        }
+    ],
+    "fecha_compra":"20-10-2014",
+    "IVA":40660,
+    "total_bruto":214000,
+    "total_neto":254660
+}
