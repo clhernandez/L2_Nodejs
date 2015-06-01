@@ -31,9 +31,13 @@ router.get('/trabajadores/get_by_rut', function (req, res){
 	var flagfind=false; //bloquear peticion asincrona.
 
 	req.db.usuarios.findOne({rut:rut},function(err, result) {
-	    if (err) throw err;
-	    console.log("Trabajador: "+result);
+		if (err){
+	    	result = err;
+	    	res.json(500, result);
+	    }else{
+	    	console.log("Trabajador: "+result);
 	    res.json(result);
+	    }
 	});
 });
 
@@ -84,9 +88,13 @@ router.put('/trabajadores/modify_by_rut', function (req, res){
 	req.db.usuarios.update({rut: rut},{rut : rut ,nombre : nombre, apellido : apellido,
 		email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
 		cargo : nombreCargo, departamento : nombreDepartamento, sueldo : sueldo}, function(err, result){
-			if (err) throw err;
-			console.log(result);
-			res.json(result);
+			if (err){
+		    	result = err;
+		    	res.json(500, result);
+		    }else{
+		    	console.log("modificar Trabajador: "+result);
+		   		res.json(result);
+		    }
 	});
 });
 
@@ -98,9 +106,13 @@ router.delete('/trabajadores/delete_by_rut', function (req, res){
 	console.log(rut);
 
 	req.db.usuarios.remove({rut:rut},function(err, result) {
-	    if (err) throw err;
-	    console.log("Resultado: "+result);
-	    res.json(result);
+	    if (err){
+	    	result = err;
+	    	res.json(500, result);
+	    }else{
+	    	console.log("Eliminar Trabajador: "+result);
+	   		res.json(result);
+	    }
 	});
 });
 

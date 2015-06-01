@@ -30,13 +30,13 @@ router.post('/ordenes/add_orden', function (req, res){
 	//res.json({codigo:1, mensaje:"Orden ingresada correctamente"});
 
 	req.db.ordenes.insert(documento, function(err, result) {
-		    if (err){
-		    	result = err;
-		    	res.json(500, result);
-		    }else{
-		    	console.log("add orden: "+result);
-		   		res.json(result);
-		    }
+	    if (err){
+	    	result = err;
+	    	res.json(500, result);
+	    }else{
+	    	console.log("add orden: "+result);
+	   		res.json(result);
+	    }
 	});
 });
 
@@ -50,7 +50,7 @@ router.get('/ordenes/get_by_id', function (req, res){
 	    	result = err;
 	    	res.json(500, result);
 	    }else{
-	    	console.log("Orden: "+result);
+	    	console.log("obtener orden: "+result);
 	   		res.json(result);
 	    }
 	});

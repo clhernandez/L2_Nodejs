@@ -31,7 +31,12 @@ $(document).ready(function(){
 			  	data: {jsonParam: json}, //This will encode your json for url automatically
 			  	dataType: "json", //With this the response will be automatically json-decoded!
 			  	success: function(json){ //Assuming your server output was '{"lastName":"Villegas"}' as string
-			    	console.log(json);
+			    	if(json.codigo==0){
+			    		$("#msj_mod_orden").empty().append("Orden ingresada correctamente");
+			    	}else{
+			    		$("#msj_mod_orden").empty().append(json.mensaje);
+			    	}
+			    	$("#modalResp").modal();
 			  	}
 			});
 			}else{
@@ -50,7 +55,8 @@ $(document).ready(function(){
 	});
 
 	$('#myModal').on('hidden.bs.modal', function (e) {
-	  $('#form_producto')[0].reset();
+	  
+	  $("#msj_add_prd").addClass("hide");
 	});
 
 	$("#guardar_producto").click(function(){
@@ -65,6 +71,8 @@ $(document).ready(function(){
 
 			agregar_producto_tabla(producto);
 			actualizarOrden();
+			$('#form_producto')[0].reset();
+			$("#msj_add_prd").removeClass("hide").append("Prducto Ingresado Correctamente.");
 		}else{
 			var $myForm = $("#form_producto");
 			$('<input type="submit">').hide().appendTo($myForm).click().remove();
@@ -155,13 +163,14 @@ function cargarModificacionPrd(id){
 
 function eliminarPrd(id){
 	console.log("Eliminar: "+id);
-
-	for (var i = 0; i < listaProductos.productos.length; i++) {
+	if(confirm("¿Esta seguro que desea eliminar este producto?")){
+		for (var i = 0; i < listaProductos.productos.length; i++) {
 		if(listaProductos.productos[i].id_prd===id){
 			listaProductos.productos.splice(i, 1);
-			break;
-		}
-	};
-	$("#producto_"+id).remove();
-	actualizarOrden();
+				break;
+			}
+		};
+		$("#producto_"+id).remove();
+		actualizarOrden();
+	}
 }

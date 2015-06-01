@@ -16,18 +16,5 @@ db.departamentos.update({nombre_departamento : "Rrhh"},{nombre_departamento : "R
 
 
 
-{
-	"server":"http://localhost:3001",
-	"rrhh":{
-		"trbajadores":{
-			"get_all":"/rrhh/trabajadores/get_all",
-			"get_by_rut":"/rrhh/trabajadores/get_by_rut",
-			"modify_by_rut": "/rrhh/trabajadores/modify_by_rut",
-			"delete_by_rut":"/rrhh/trabajadores/delete_by_rut",
-			"add_trabajador":"/rrhh/trabajadores/add"
-		}
-	},
-	"finanzas":{
-		"ordenes_compra":""
-	}
-}
+mongoexport.exe /d rrhh /c usuarios /o c:\data\rrhh_usuarios.json /pretty
+mongoexport.exe /d finanzas /c ordenes /o c:\data\finanzas_ordenes.json /pretty

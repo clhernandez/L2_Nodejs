@@ -1,32 +1,30 @@
 {
 	"_id": {
-		"$oid": "556a1614778e10bf02b21d79"
+		"$oid": "556b4f80a87eb76c03851f6d"
 	},
-	"apellido": "Gomez",
-	"cargo": "Ing. RRhh",
-	"departamento": "Rrhh",
+	"apellido": "asiudhawd",
+	"cargo": "Contador",
+	"departamento": "Finanzas",
 	"email": "asd@asd.cl",
-	"fecha_contratacion": "10/0/010",
-	"nombre": "Juan",
+	"fecha_contratacion": "2015-05-06",
+	"nombre": "adwad",
 	"password": "asd",
-	"rut": "1-9",
-	"sistema": "2",
-	"sueldo": "100000",
-	"telefono": "5674875"
+	"rut": "1-8",
+	"sueldo": "123123",
+	"telefono": "9374"
 }
 {
 	"_id": {
-		"$oid": "556a4e58d0190ac00dc4da2d"
+		"$oid": "556be50e055b42901ca1d2bc"
 	},
-	"apellido": "123",
-	"cargo": "Ing. RRHH",
+	"apellido": "asd",
+	"cargo": "Adm.Recursos Humanos",
 	"departamento": "Rrhh",
-	"email": "awdawd@asd.com",
-	"fecha_contratacion": "2015-05-14",
-	"nombre": "awdad",
+	"email": "asd2@asd.cl",
+	"fecha_contratacion": "0005-06-07",
+	"nombre": "asd",
 	"password": "asd",
 	"rut": "123",
-	"sistema": "2",
-	"sueldo": "123123",
-	"telefono": "123"
+	"sueldo": "7765",
+	"telefono": "876"
 }

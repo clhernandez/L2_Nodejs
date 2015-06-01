@@ -1,8 +1,8 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-
 var timeoutGlobal = 2000;
+
 /* GET home page. */
 router.get('/dashboard', function(req, res, next) {
 	var data = {cantidadCargos:2, cantidadDepartamentos:3, cantidadTrabajadores:4};
@@ -26,7 +26,7 @@ router.get('/listarTrabajadores', function(req, res, next) {
 	  	}
 	}).on('error', function(){
 		data.codigo = -1;
-		data.mensaje = "Servicios no responden, vuelva a intentarlo dentro de unos momentos";
+		data.mensaje = "Ocurrio un problema al listar a los trabajadores, vuelva a intentarlo dentro de unos momentos.";
 		res.render('rrhh/listarTrabajadores', data);
 	});
 });
@@ -36,19 +36,22 @@ router.get('/getTrabajadorByRut', function(req, res, next) {
 	var rut = req.query.rut;
 	console.log(rut);
 	var data = {};
-	request.get({url:req.servicios.rrhh.trabajadores.get_by_rut, qs:{rut:rut}}, function(err,response,body){ 
+	request.get({url:req.servicios.rrhh.trabajadores.get_by_rut, timeout:timeoutGlobal, qs:{rut:rut}}, function(err,response,body){ 
 		console.log("obtener trabajador")
 		if (!err && response.statusCode == 200) {
 	    	data = JSON.parse(body);
-	  	}else{
-	  		data.codigo = response.statusCode;
-	  		data.mensaje = 'Error al obtener el trabajador';
+	    	console.log(data);
+			res.json(data);
 	  	}
-	  	console.log(data);
-  
+
+	}).on('error', function(){
+		data.codigo = -1;
+		data.mensaje = "Ocurrio un problema al obtener al trabajador, vuelva a intentarlo dentro de unos momentos.";
 		res.json(data);
 	});
 });
+
+
 /*POST modifica los datos de un trabajador mediante AJAX*/
 router.post('/modificar_trabajador', function(req, res, next) {
 	var id_trabajador = req.body.id_trabajador;
@@ -65,7 +68,7 @@ router.post('/modificar_trabajador', function(req, res, next) {
 
 	var data = {};
 
-	request.put({url: req.servicios.rrhh.trabajadores.modify_by_rut, 
+	request.put({url: req.servicios.rrhh.trabajadores.modify_by_rut, timeout:timeoutGlobal, 
 		form: {id_trabajador : id_trabajador, rut : rut, nombre : nombre, apellido : apellido, 
 			email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
 			sueldo : sueldo, id_departamento_fk : id_departamento_fk, id_cargo_fk : id_cargo_fk}}, function(err,response,body){
@@ -74,13 +77,12 @@ router.post('/modificar_trabajador', function(req, res, next) {
 		if (!err && response.statusCode == 200) {
 	    	data.codigo = JSON.parse(body);
 	    	data.mensaje = "Modificacion Exitosa."
-	  	}else{
-	  		data.codigo = response.statusCode;
-	  		data.mensaje = 'Ocurrio un error en la modificacion al trabajador.';
+	    	res.json(data);
 	  	}
-
-	  	console.log(data);
-  
+		
+	}).on('error', function(){
+		data.codigo = -1;
+		data.mensaje = "Ocurrio un problema al modificar al trabajador, vuelva a intentarlo dentro de unos momentos.";
 		res.json(data);
 	});
 });
@@ -92,18 +94,19 @@ router.post('/eliminarTrabajadorById', function(req, res, next) {
 
 	var data = {};
 
-	request.del({url:req.servicios.rrhh.trabajadores.delete_by_rut, form: {rut : rut}, qs:{rut : rut}}, function(err,response,body){
+	request.del({url:req.servicios.rrhh.trabajadores.delete_by_rut, timeout:timeoutGlobal, 
+		form: {rut : rut}, qs:{rut : rut}}, function(err,response,body){
 
 		console.log("Eliminar trabajador")
 		if (!err && response.statusCode == 200) {
 	    	data.codigo = JSON.parse(body);
-	  	}else{
-	  		data.codigo = response.statusCode;
-	  		data.mensaje = 'Ocurrio un error el eliminar al trabajador.';
+			res.json(data)
 	  	}
 
-	  	console.log(data);
-  
+	  	;
+	}).on('error', function(){
+		data.codigo = -1;
+		data.mensaje = "Ocurrio un problema al eliminar al trabajador, vuelva a intentarlo dentro de unos momentos.";
 		res.json(data);
 	});
 });
@@ -131,29 +134,34 @@ router.post('/add_trabajador', function(req, res, next) {
 	var nombreCargo = req.body.id_cargo_fk;
 
 	//ingresar el trabajador 
-	request.post({url:req.servicios.rrhh.trabajadores.add_trabajador, timeout:2000, form: {rut : rut, nombre : nombre, apellido : apellido, 
+	request.post({url:req.servicios.rrhh.trabajadores.add_trabajador, timeout:timeoutGlobal, 
+		form: {rut : rut, nombre : nombre, apellido : apellido, 
 			email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
 			sueldo : sueldo, id_departamento_fk : nombreDepartamento, id_cargo_fk : nombreCargo} }, function(err,response,body){ 
-			console.log(response.statusCode);
+
 			if (!err && response.statusCode == 200) {
 				//console.log(JSON.parse(body)); //body trae los datos del trabajador
 				data.mensaje = "Trabajador ingresado correctamente";
 				data.codigo = response.statusCode;
+				res.json(data);
 		  	}else{
 		  		//Manejdo de errores del servicio
-		  		if(response.statusCode==500){
+		  		if(!err && response.statusCode==500){
 		  			var parse = JSON.parse(body);
 		  			console.log(parse);
 		  			if(parse.code==11000){
 		  				data.codigo=11000; 
 		  				data.mensaje="Error, email ya existe.";
+
 		  			}
-		  		}else{
-					data.codigo = response.statusCode;
-		  			data.mensaje = 'Error al ingresar trabajador';
+		  			res.json(data);
 		  		}
 		  	}
-		  	res.json(data);
+		  	
+	}).on('error', function(){
+		data.codigo = -1;
+		data.mensaje = "Ocurrio un problema al ingresar al trabajador, vuelva a intentarlo dentro de unos momentos.";
+		res.json(data);
 	});
 });
 

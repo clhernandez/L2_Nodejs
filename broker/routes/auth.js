@@ -7,7 +7,6 @@ router.post('/login', function (req, res){
 
 	req.db.usuarios.findOne({email:nombreusuario, password:password}, function(err, result) {
 	    console.log("result: " + result);
-	    
 	    if(result==null){
 	    	result = {error: 1};
 	    }else{

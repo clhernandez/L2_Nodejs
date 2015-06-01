@@ -1,28 +1,66 @@
 {
-    "cliente":{
-        "nombre":"Jose",
-        "apellido":"Ramirez",
-        "direccion":"Av. Las sophoras #6478",
-        "telefono":"+56 9 74679873",
-        "ciudad":"Arica",
-        "region":"Arica y Parinacota"
-    },
-    "productos":[
-        {
-            "nombre":"Clavo4'",
-            "precio":25,
-            "descripcion":"Un clásico de los clavos.",
-            "cantidad":500
-        },
-        {
-            "nombre":"Placa Cholguan 4mtx2mt",
-            "precio":5300,
-            "descripcion":"La mejor calidad.",
-            "cantidad":5
-        }
-    ],
-    "fecha_compra":"20-10-2014",
-    "IVA":40660,
-    "total_bruto":214000,
-    "total_neto":254660
+	"_id": {
+		"$oid": "556bc77ed5aebe9026a7e0f2"
+	},
+	"cliente": {
+		"apellido": "hoi",
+		"ciudad": "iuh",
+		"direccion": "uhoi",
+		"nombre": "prueba",
+		"region": "uh",
+		"telefono": "uh"
+	},
+	"cntProductos": NumberInt(2),
+	"id_orden": "556bc77ed5aebe9026a7e0f2",
+	"orden": {
+		"fechaOrden": "2015-05-09",
+		"iva": NumberInt(447),
+		"totalBruto": NumberInt(2357),
+		"totalNeto": NumberInt(2804)
+	},
+	"productos": [
+		{
+			"cantidad": "123",
+			"descripcion": "uyg",
+			"id_prd": NumberInt(1),
+			"nombre": "ui",
+			"precio": "123"
+		},
+		{
+			"cantidad": "234",
+			"descripcion": "234",
+			"id_prd": NumberInt(2),
+			"nombre": "asdasd",
+			"precio": "2234"
+		}
+	]
+}
+{
+	"_id": {
+		"$oid": "556bda7192cc23d415312cfc"
+	},
+	"cliente": {
+		"apellido": "iuho",
+		"ciudad": "iouh",
+		"direccion": "uh",
+		"nombre": "ouh",
+		"region": "ouh",
+		"telefono": "iouh"
+	},
+	"cntProductos": NumberInt(1),
+	"orden": {
+		"fechaOrden": "2015-06-12",
+		"iva": NumberInt(166),
+		"totalBruto": NumberInt(876),
+		"totalNeto": NumberInt(1042)
+	},
+	"productos": [
+		{
+			"cantidad": "876",
+			"descripcion": "876",
+			"id_prd": NumberInt(1),
+			"nombre": "uygiy",
+			"precio": "876"
+		}
+	]
 }

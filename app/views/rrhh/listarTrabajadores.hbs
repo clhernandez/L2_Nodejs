@@ -2,6 +2,9 @@
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h1 class="page-header">Listado Trabajadores</h1>
 		<div class="table-responsive">
+			{{#if codigo}}
+			  <div class="alert alert-info">{{mensaje}}</div>
+			{{^}}
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -34,6 +37,7 @@
 					{{/each}}
 				</tbody>
 			</table>
+			{{/if}}
 		</div>
 	</div>
 
@@ -68,8 +72,8 @@
 					<option value="Finanzas">Finanzas</option>
 				</select>
 				<select name="id_cargo_fk" class="form-control" id="input_id_cargo_fk" required>
-					<option value="Contador">Contador</option>
 					<option value="Adm.Recursos Humanos">Adm. Recursos Humanos</option>
+					<option value="Contador">Contador</option>
 				</select>
 		      </form>
 		      <span id='msjws' class='alert alert-info hide' ></span>
@@ -81,69 +85,24 @@
 	    </div>
 	  </div>
 	</div>
+	<div class="modal fade" id="modalResp">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Respuesta modificar trabajador</h4>
+				</div>
+				<div class="modal-body">
+					<div id='msj_mod_trb' class='alert alert-info'></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<jsp:include page="base/footer.jsp" flush="true"></jsp:include>
-	<script>
-		$(document).ready(function(){
-			var reload = false;
-			$(".modificar_trabajador").click(function(){
-				var entrada = $(this).attr("attr-id");
-				console.log(entrada);
-				$.get("getTrabajadorByRut", {rut: entrada}, function(json){
-					console.log(json);
-					if(json!=null){
-						
-						$("#input_id_trabajador").val(json._id);
-						$("#input_rut").val(json.rut);
-						$("#input_nombre").val(json.nombre);
-						$("#input_apellido").val(json.apellido);
-						$("#input_email").val(json.email);
-						$("#input_password").val(json.password);
-						$("#input_telefono").val(json.telefono);
-						$("#input_fecha_contratacion").val(json.fecha_contratacion);
-						$("#input_sueldo").val(json.sueldo);
-						
-						$("#input_id_cargo_fk option[value='"+ json.cargo +"']").attr("selected",true);
-						$("#input_id_departamento_fk option[value='"+ json.departamento +"']").attr("selected",true);
-						
-						$('#myModal').modal();
-					}
-				});
-				
-			});
-
-			$("#guardar_trabajador").click(function(){
-				if($('#form_mod_trabajador')[0].checkValidity()){
-					$.post("modificar_trabajador", $("#form_mod_trabajador").serialize(), function(json){
-						$("#msjws").empty();
-						$("#msjws").text(json.mensaje);
-						$("#msjws").removeClass("hide");
-						reload=true;
-					});
-				}else{
-					var $myForm = $("#form_mod_trabajador");
-					$('<input type="submit">').hide().appendTo($myForm).click().remove();
-				}
-				
-			});
-			
-			$(".eliminar_trabajador").click(function(){
-				var entrada = $(this).attr("attr-id");
-				console.log(entrada);
-				if(confirm("¿Esta seguro que desea eliminar a este trabajador?")){
-					$.post("eliminarTrabajadorById", {rut: entrada}, function(json){
-						location.reload();
-					});
-				}
-				
-			});
-			$('#myModal').on('hide.bs.modal', function (e) {
-				if(reload==true){
-					location.reload();
-				}
-			});
-		});
-	</script>
+	<script src="../javascripts/listar_trabajador.js"></script>
 	<style>
 		#myModal form input{
 			margin-bottom:5px;
