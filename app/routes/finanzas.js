@@ -5,10 +5,35 @@ var timeoutGlobal = 2000;
 
 /* GET home page. */
 router.get('/dashboard', function(req, res, next) {
-	var data = {cantidadProductos:2, cantidadOrdenes:3, cantidadClientes:4, cantidadOrdenesProducto: 2};
+	var data = {};
+	data.layout = 'finanzas/base/layout';
+	data.cantidadProductos = 0;
+	data.cantidadClientes = 0;
+	data.cantidadOrdenesProducto = 0;
 
-	var dataset = {d:data, layout:'finanzas/base/layout'};
-	res.render('finanzas/index', dataset);
+	request.get({url: req.servicios.finanzas.ordenes_compra.get_all, timeout:timeoutGlobal}, function(err,response,body){
+		console.log("obtener listado de ordenes...")
+		if (!err && response.statusCode == 200) {
+			data.ordenes = JSON.parse(body);
+			for (var i = 0; i < data.ordenes.length; i++) {
+				data.cantidadClientes+=1;
+				data.cantidadOrdenesProducto+=1;
+				for (var j = 0; j < data.ordenes[i].productos.length; j++) {
+					data.cantidadProductos+=1;
+				};
+			};
+
+
+			res.render('finanzas/index', data);
+	  	}
+
+	}).on('error', function(){
+		//error
+		data.codigo = -1;
+		data.mensaje = "Ocurrio un problema al consultar las Ordenes, vuelva a intentarlo dentro de unos momentos.";
+		res.render('finanzas/index', data);
+	});
+
 });
 
 router.get('/listarOrdenProductos', function(req, res, next) {

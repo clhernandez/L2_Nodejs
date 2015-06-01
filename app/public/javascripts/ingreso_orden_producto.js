@@ -9,21 +9,21 @@ $(document).ready(function(){
 		//descomentar para activar validaciones
 		if($('#form_orden_producto')[0].checkValidity()){
 			if($('#form_datos_cliente')[0].checkValidity()){
-			console.log(listaProductos);
-			console.log(datosOrden);
+			// console.log(listaProductos);
+			// console.log(datosOrden);
 			datosCliente.nombre = $("#input_nombre").val();
 			datosCliente.apellido = $("#input_apellido").val();
 			datosCliente.direccion = $("#input_direccion").val();
 			datosCliente.telefono = $("#input_telefono").val();
 			datosCliente.ciudad = $("#input_ciudad").val();
 			datosCliente.region = $("#input_region").val();
-			console.log(datosCliente);
+			// console.log(datosCliente);
 			var entrada = {};
 			entrada = listaProductos;
 			entrada.cliente = datosCliente;
 			entrada.orden = datosOrden;
-			console.log(entrada);
-			console.log(JSON.stringify(entrada));
+			// console.log(entrada);
+			// console.log(JSON.stringify(entrada));
 			var json = JSON.stringify(entrada);
 			$.ajax({
 				url:'ingresarOrden',
@@ -87,17 +87,18 @@ $(document).ready(function(){
 	$("#btn_modificar_prd").click(function(){
 		var producto = {};
 		if($('#form_producto_mod')[0].checkValidity()){
+			// console.log("mod");
 			producto.nombre=$("#myModalMod #input_nombre_producto").val();
 			producto.precio = $("#myModalMod #input_precio").val();
 			producto.descripcion = $("#myModalMod #input_descripcion").val();
 			producto.cantidad = $("#myModalMod #input_cantidad").val();
 			producto.id_prd = parseInt($("#myModalMod #id_prd_mod").val());
-			eliminarPrd(producto.id_prd);
+			
+			eliminarOk(producto.id_prd);
 
-			listaProductos.productos.push(producto);
 			agregar_producto_tabla(producto);
 			actualizarOrden();
-			console.log(listaProductos.productos);
+			// console.log(listaProductos.productos);
 		}else{
 			var $myForm = $("#form_producto_mod");
 			$('<input type="submit">').hide().appendTo($myForm).click().remove();
@@ -122,10 +123,10 @@ function actualizarOrden(){
 	var totalBruto = 0;
 	var iva = 0;
 	var totalNeto=0;
-	console.log(listaProductos.productos);
+	// console.log(listaProductos.productos);
 
 	for (var i = 0; i < listaProductos.productos.length; i++) {
-		console.log(listaProductos.productos[i]);
+		// console.log(listaProductos.productos[i]);
 		totalBruto = totalBruto + parseInt(listaProductos.productos[i].precio);
 	};
 	iva = parseInt(totalBruto * 0.19);
@@ -150,7 +151,7 @@ function cargarModificacionPrd(id){
 			break;
 		}
 	};
-	console.log(producto);
+	// console.log(producto);
 
 	$("#myModalMod #input_nombre_producto").val(producto.nombre);
 	$("#myModalMod #input_precio").val(producto.precio);
@@ -162,15 +163,21 @@ function cargarModificacionPrd(id){
 }
 
 function eliminarPrd(id){
-	console.log("Eliminar: "+id);
+	// console.log("Eliminar: "+id);
 	if(confirm("¿Esta seguro que desea eliminar este producto?")){
-		for (var i = 0; i < listaProductos.productos.length; i++) {
-		if(listaProductos.productos[i].id_prd===id){
-			listaProductos.productos.splice(i, 1);
-				break;
-			}
-		};
-		$("#producto_"+id).remove();
-		actualizarOrden();
+		eliminarOk(id);
 	}
+}
+function eliminarOk(id){
+	// console.log("id: "+id);
+	for (var i = 0; i < listaProductos.productos.length; i++) {
+		if(listaProductos.productos[i].id_prd==id){
+			// console.log("eliminar id: "+id);
+			listaProductos.productos.splice(i, 1);
+			// console.log(listaProductos.productos);
+			break;
+		}
+	};
+	$("#producto_"+id).remove();
+	actualizarOrden();
 }

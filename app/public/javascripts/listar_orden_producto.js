@@ -4,7 +4,7 @@
 			var entrada = $(this).attr("attr-id");
 			$.post("getOrdenProductoById", {id_orden_producto: entrada}, function(json){
 				if(json!=null){
-					console.log(json);
+					// console.log(json);
 					$("#input_id_orden_producto").val(json._id);
 
 					//datos orden
@@ -16,7 +16,7 @@
 
 					//Datos cliente
 					var cliente = json.cliente;
-					console.log(cliente);
+					// console.log(cliente);
 					$("#input_nombre").val(cliente.nombre);
 					$("#input_apellido").val(cliente.apellido);
 					$("#input_direccion").val(cliente.direccion);
@@ -25,9 +25,10 @@
 					$("#input_region").val(cliente.region);
 
 					//productos
+					$("#tabla_productos tbody tr").remove();
 					var productos= json.productos;
 					for (var i = 0; i < productos.length; i++) {
-						console.log(productos[i]);
+						// console.log(productos[i]);
 						listaProductos.cntProductos=listaProductos.cntProductos+1;
 						agregar_producto_tabla(productos[i]);
 					};
@@ -35,32 +36,32 @@
 					$("#input_id_producto option[value="+ json.id_producto +"]").attr("selected",true);
 					$("#input_cantidad").val(json.cantidad);
 					
-					$('#contenedor_mod_orden').slideToggle();
+					$('#contenedor_mod_orden').slideDown();
 				}
 			});
-			
 		});
+
 		$("#btn_modificar_orden").click(function(){
 			if($('#form_orden_producto')[0].checkValidity()){
 				if($('#form_datos_cliente')[0].checkValidity()){
 				actualizarOrden();
 
-				console.log(listaProductos);
-				console.log(datosOrden);
+				// console.log(listaProductos);
+				// console.log(datosOrden);
 				datosCliente.nombre = $("#input_nombre").val();
 				datosCliente.apellido = $("#input_apellido").val();
 				datosCliente.direccion = $("#input_direccion").val();
 				datosCliente.telefono = $("#input_telefono").val();
 				datosCliente.ciudad = $("#input_ciudad").val();
 				datosCliente.region = $("#input_region").val();
-				console.log(datosCliente);
+				// console.log(datosCliente);
 				var entrada = {};
 				entrada = listaProductos;
 				entrada.id_orden = $("#input_id_orden_producto").val();
 				entrada.cliente = datosCliente;
 				entrada.orden = datosOrden;
 
-				console.log(JSON.stringify(entrada));
+				// console.log(JSON.stringify(entrada));
 
 				var json = JSON.stringify(entrada);
 
@@ -70,7 +71,7 @@
 				  	data: {jsonParam: json}, //This will encode your json for url automatically
 				  	dataType: "json", //With this the response will be automatically json-decoded!
 				  	success: function(json){ //Assuming your server output was '{"lastName":"Villegas"}' as string
-				  		console.log(json);
+				  		// console.log(json);
 				  		if(json.codigo==1){
 				  			$("#msj_mod_orden").text("Modificacion realizada correctamente");
 				  			$('#modalResp').modal();
@@ -96,7 +97,7 @@
 		
 		$(".eliminar_orden_producto").click(function(){
 			var entrada = $(this).attr("attr-id");
-			console.log(entrada);
+			// console.log(entrada);
 			if(confirm("¿Esta seguro que desea eliminar esta orden producto?")){
 				$.post("eliminarOrdenProductoById", {id_orden_producto: entrada}, function(json){
 					location.reload();

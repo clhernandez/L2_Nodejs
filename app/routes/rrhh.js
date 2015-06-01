@@ -5,10 +5,28 @@ var timeoutGlobal = 2000;
 
 /* GET home page. */
 router.get('/dashboard', function(req, res, next) {
-	var data = {cantidadCargos:2, cantidadDepartamentos:3, cantidadTrabajadores:4};
+	var data = {};
+	data.layout = 'rrhh/base/layout';
+	data.cantidadCargos = 2;
+	data.cantidadDepartamentos = 2;
+	data.cantidadTrabajadores = 0;
+	
+	request.get({url: req.servicios.rrhh.trabajadores.get_all, timeout:timeoutGlobal}, function(err,response,body){
+		console.log("obtener listado de trabajadores...")
+		if (!err && response.statusCode == 200) {
+			var temp = JSON.parse(body);
+			
+			data.cantidadTrabajadores = temp.length;
+			res.render('rrhh/index', data);
+	  	}
+	}).on('error', function(){
+		data.codigo = -1;
+		data.mensaje = "Ocurrio un problema al listar a los trabajadores, vuelva a intentarlo dentro de unos momentos.";
+		res.render('rrhh/listarTrabajadores', data);
+	});
 
-	var dataset = {d:data, layout:'rrhh/base/layout'};
-	res.render('rrhh/index', dataset);
+
+	
 });
 
 /*.................................TRABAJADORES.................................................*/
