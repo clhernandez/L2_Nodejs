@@ -13,3 +13,21 @@ db.departamentos.insert({nombre_departamento : "Rrhh", administrador : "1-9", ub
 
 db.departamentos.update({nombre_departamento : "Finanzas"},{nombre_departamento : "Finanzas", administrador : "1-8", ubicacion : "Santiago", sistema:"1"})
 db.departamentos.update({nombre_departamento : "Rrhh"},{nombre_departamento : "Rrhh", administrador : "1-9", ubicacion : "Santiago", sistema:"2"})
+
+
+
+{
+	"server":"http://localhost:3001",
+	"rrhh":{
+		"trbajadores":{
+			"get_all":"/rrhh/trabajadores/get_all",
+			"get_by_rut":"/rrhh/trabajadores/get_by_rut",
+			"modify_by_rut": "/rrhh/trabajadores/modify_by_rut",
+			"delete_by_rut":"/rrhh/trabajadores/delete_by_rut",
+			"add_trabajador":"/rrhh/trabajadores/add"
+		}
+	},
+	"finanzas":{
+		"ordenes_compra":""
+	}
+}

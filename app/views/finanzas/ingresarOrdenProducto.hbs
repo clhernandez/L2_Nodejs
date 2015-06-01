@@ -1,46 +1,151 @@
-<%@include file="base/header.jsp"  %> 
-
-<body>
-	<%@include file="base/top_menu.jsp"  %> 
-
-	<div class="container-fluid">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h1 class="page-header">Ingresar Orden de Productos</h1>
 		<div class="row">
-			<jsp:include page="base/left_menu.jsp" flush="true"></jsp:include>
-			
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<div class="table-responsive">
-					<h1 class="page-header">Ingresar Orden Producto</h1>
-				
-					<form class="form-signin" action="ingresarOrdenProducto" method="post">
-						
-						<label for="input_nombre" class="sr-only">Producto</label>
-						<select class="form-control" id="input_id_producto" name="id_producto" required>
-							<c:forEach items="${productos}" var="prd" varStatus="loop">
-								<option value="${prd.id_producto}">${prd.nombre}</option>
-							</c:forEach>
-						</select>
-						
-						<label for="input_cantidad" class="sr-only">Cantidad Producto</label>
-						<input name="cantidad" type="number" id="input_cantidad" class="form-control" placeholder="Precio Producto"  autofocus="">
+	        <div class="col-md-6">
+          		<h2>Datos Orden</h2>
+				<form class="form-signin form-horizontal" action="ingresarOrden" method="post"  id="form_orden_producto">
 
-						<button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
-				      </form>
-				    	<c:if test="${not empty msj}">
-						    <div class="alert alert-info"> ${msj} </div>
-						</c:if>
+					<label for="input_fecha_orden" class="control-label">Fecha Orden</label>
+					<input name="fecha_orden" type="date" id="input_fecha_orden" class="form-control" required autofocus="">
+
+					<label for="input_total_bruto" class="control-label">Total Bruto</label>
+					<input name="fecha_orden" type="number" id="input_total_bruto" class="form-control" readonly autofocus="" value="0">
+					
+					<label for="input_iva" class="control-label">Total IVA</label>
+					<input name="fecha_orden" type="number" id="input_iva" class="form-control" readonly autofocus="" value="0">
+
+					<label for="input_total_neto" class="control-label">Total Neto</label>
+					<input name="fecha_orden" type="number" id="input_total_neto" class="form-control" readonly autofocus="" value="0">
+
+					<button class="btn btn-lg btn-primary btn-block" type="button" id="btn_ingresar_orden">Ingresar Orden Producto</button>
+					
+				</form>
+	        </div>
+	        <div class="col-md-6">
+	          <h2>Datos Cliente</h2>
+				<form name="datosCliente" class="form-signin" action="ingresarCliente" method="post" id="form_datos_cliente">
+					<label for="input_nombre" class="control-label">Nombre Cliente</label>
+					<input name="nombre" type="text" id="input_nombre" class="form-control"  required autofocus="">
+				
+					<label for="input_apellido" class="control-label">Apellido</label>
+					<input name="apellido" type="text" id="input_apellido" class="form-control"   required autofocus="">
+				
+					<label for="input_direccion" class="control-label">Direccion</label>
+					<input name="direccion" type="text" id="input_direccion" class="form-control"   autofocus="">
+				
+				
+					<label for="input_teledono" class="control-label">Telefono</label>
+					<input name="telefono" type="text" id="input_telefono" class="form-control"   autofocus="">
+				
+					<label for="input_ciudad" class="control-label">Ciudad</label>
+					<input name="ciudad" type="text" id="input_ciudad" class="form-control"   autofocus="">
+				
+					<label for="input_region" class="control-label">Region</label>
+					<input name="region" type="text" id="input_region" class="form-control"   autofocus="">
+						
+				</form>
+	    	</div>
+       	</div>
+      	<div class="row">
+	      		<div class="table-responsive">
+	      			<h2>Productos en la orden
+	      			<button type="button" class="btn btn-info btn-lg" id="btn_agragar_producto">
+				  		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Producto
+					</button>
+					</h2>
+					<table class="table table-striped" id="tabla_productos">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Nombre</th>
+								<th>Descripcion</th>
+								<th>Precio</th>
+								<th>cantidad</th>
+								<th>Modificar</th>
+								<th>Eliminar</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
 				</div>
+		</div>
+</div>
+
+<!-- MODAL PRODUCTOS -->
+<div class="modal fade" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Agregar Producto</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-signin" action="ingresarProducto" method="post" id="form_producto">
+					<label for="input_nombre_producto" class="control-label">Nombre Producto</label>
+					<input name="nombre" type="text" id="input_nombre_producto" class="form-control"  required autofocus="">
+
+					<label for="input_precio" class="control-label">Precio Producto</label>
+					<input name="precio" type="text" id="input_precio" class="form-control" required autofocus="">
+
+					<label for="input_descripcion" class="control-label">Descripcion Producto</label>
+					<input name="descripcion" type="text" id="input_descripcion" class="form-control" autofocus="">
+
+					<label for="input_cantidad" class="control-label">Cantidad Producto</label>
+					<input name="cantidad" type="number" id="input_cantidad" class="form-control" required  autofocus="">
+
+				</form>
+				<span id='msjws' class='alert alert-info hide' ></span>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" id="guardar_producto">Agregar Producto a la orden</button>
 			</div>
 		</div>
 	</div>
-	<style>
-		.table-responsive{
-			width:50%;
-			margin: 0 auto;
-		}
-		.table-responsive form input{
-			margin-bottom:5px;
-		}
-	</style>
-	<jsp:include page="base/footer.jsp" flush="true"></jsp:include>
-</body>
-</html>
+</div>
+<div class="modal fade" id="myModalMod">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Modificar Producto</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-signin" action="ingresarProducto" method="post" id="form_producto_mod">
+					<input name="id_prd_mod" type="hidden" id="id_prd_mod">
+
+					<label for="input_nombre_producto" class="control-label">Nombre Producto</label>
+					<input name="nombre" type="text" id="input_nombre_producto" class="form-control"  required autofocus="">
+
+					<label for="input_precio" class="control-label">Precio Producto</label>
+					<input name="precio" type="text" id="input_precio" class="form-control" required autofocus="">
+
+					<label for="input_descripcion" class="control-label">Descripcion Producto</label>
+					<input name="descripcion" type="text" id="input_descripcion" class="form-control" autofocus="">
+
+					<label for="input_cantidad" class="control-label">Cantidad Producto</label>
+					<input name="cantidad" type="number" id="input_cantidad" class="form-control" required  autofocus="">
+
+				</form>
+				<span id='msj_mod' class='alert alert-info hide' ></span>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" id="btn_modificar_prd">Modificar Producto a la orden</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="../javascripts/ingreso_orden_producto.js"></script>
+
+<style>
+	.table-responsive{
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	form input{
+		margin-bottom:5px;
+	}
+</style>

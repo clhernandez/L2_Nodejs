@@ -18,7 +18,7 @@ router.get('/listarTrabajadores', function(req, res, next) {
 	var data = {};
 	data.layout ='rrhh/base/layout';
 
-	request.get({url:'http://localhost:3001/rrhh/trabajadores/get_all', timeout:timeoutGlobal}, function(err,response,body){
+	request.get({url: req.servicios.rrhh.trabajadores.get_all, timeout:timeoutGlobal}, function(err,response,body){
 		console.log("obtener listado de trabajadores...")
 		if (!err && response.statusCode == 200) {
 			data.trabajadores = JSON.parse(body);
@@ -36,7 +36,7 @@ router.get('/getTrabajadorByRut', function(req, res, next) {
 	var rut = req.query.rut;
 	console.log(rut);
 	var data = {};
-	request.get({url:'http://localhost:3001/rrhh/trabajadores/get_by_rut', qs:{rut:rut}}, function(err,response,body){ 
+	request.get({url:req.servicios.rrhh.trabajadores.get_by_rut, qs:{rut:rut}}, function(err,response,body){ 
 		console.log("obtener trabajador")
 		if (!err && response.statusCode == 200) {
 	    	data = JSON.parse(body);
@@ -65,7 +65,7 @@ router.post('/modificar_trabajador', function(req, res, next) {
 
 	var data = {};
 
-	request.put({url:'http://localhost:3001/rrhh/trabajadores/modify_by_rut', 
+	request.put({url: req.servicios.rrhh.trabajadores.modify_by_rut, 
 		form: {id_trabajador : id_trabajador, rut : rut, nombre : nombre, apellido : apellido, 
 			email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
 			sueldo : sueldo, id_departamento_fk : id_departamento_fk, id_cargo_fk : id_cargo_fk}}, function(err,response,body){
@@ -92,7 +92,7 @@ router.post('/eliminarTrabajadorById', function(req, res, next) {
 
 	var data = {};
 
-	request.del({url:'http://localhost:3001/rrhh/trabajadores/delete_by_rut', form: {rut : rut}, qs:{rut : rut}}, function(err,response,body){
+	request.del({url:req.servicios.rrhh.trabajadores.delete_by_rut, form: {rut : rut}, qs:{rut : rut}}, function(err,response,body){
 
 		console.log("Eliminar trabajador")
 		if (!err && response.statusCode == 200) {
@@ -131,7 +131,7 @@ router.post('/add_trabajador', function(req, res, next) {
 	var nombreCargo = req.body.id_cargo_fk;
 
 	//ingresar el trabajador 
-	request.post({url:'http://localhost:3001/rrhh/trabajadores/add', timeout:2000, form: {rut : rut, nombre : nombre, apellido : apellido, 
+	request.post({url:req.servicios.rrhh.trabajadores.add_trabajador, timeout:2000, form: {rut : rut, nombre : nombre, apellido : apellido, 
 			email : email, password : password, telefono : telefono, fecha_contratacion : fecha_contratacion, 
 			sueldo : sueldo, id_departamento_fk : nombreDepartamento, id_cargo_fk : nombreCargo} }, function(err,response,body){ 
 			console.log(response.statusCode);

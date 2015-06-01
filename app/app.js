@@ -21,13 +21,34 @@ app.set('view engine', 'hbs');
 //   'auto_reconnect': true,
 //   'poolSize': 2
 // };
-// var dbF = mongoskin.db('mongodb://localhost:27017/Finanzas', serverOptions); 
-// app.use(function(req, res, next) {
-//   req.db = {};
-//   //req.db.tasks = db.collection('tasks');
-//   req.db.usuarios = dbF.collection('usuarios'); //here
-//   next();
-// })
+// var dbF = mongoskin.db('mongodb://localhost:27017/Finanzas', serverOptions);
+
+app.use(function(req, res, next) {
+  //Configuracion url servicios web.
+  servicios = {
+    "rrhh":{
+      "trabajadores":{
+        "get_all":"http://localhost:3001/rrhh/trabajadores/get_all",
+        "get_by_rut":"http://localhost:3001/rrhh/trabajadores/get_by_rut",
+        "modify_by_rut": "http://localhost:3001/rrhh/trabajadores/modify_by_rut",
+        "delete_by_rut":"http://localhost:3001/rrhh/trabajadores/delete_by_rut",
+        "add_trabajador":"http://localhost:3001/rrhh/trabajadores/add"
+      }
+    },
+    "finanzas":{
+      "ordenes_compra":{
+        "get_all":"http://localhost:3001/finanzas/ordenes/get_all",
+        "add_orden":"http://localhost:3001/finanzas/ordenes/add_orden",
+        "get_by_id":"http://localhost:3001/finanzas/ordenes/get_by_id",
+        "modify_by_id":"http://localhost:3001/finanzas/ordenes/modify_by_id",
+        "delete_by_id":"http://localhost:3001/finanzas/ordenes/delete_by_id"
+      }
+    }
+  };
+  //req.db.tasks = db.collection('tasks');
+  req.servicios = servicios;
+  next();
+})
 
 
 // uncomment after placing your favicon in /public
